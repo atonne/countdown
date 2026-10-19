@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đếm Ngược 30/10</title>
+  <meta name="description" content="Đếm ngược đến 15:00 ngày 30/10/2026">
+  <meta name="theme-color" content="#07060f">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07060f;
+      --text: #f4f1ff;
+      --muted: rgba(244, 241, 255, 0.62);
+      --glass: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.14);
+      --a1: #7c5cff;
+      --a2: #ff5ca8;
+      --a3: #2de2e6;
+      --a4: #ffb84d;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { height: 100%; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Be Vietnam Pro", system-ui, sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---------- Background ---------- */
+    .aurora {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+      filter: blur(80px) saturate(140%);
+      opacity: 0.75;
+    }
+    .aurora span {
+      position: absolute;
+      border-radius: 50%;
+      mix-blend-mode: screen;
+      animation: drift 22s ease-in-out infinite alternate;
+    }
+    .aurora span:nth-child(1) { width: 55vmax; height: 55vmax; background: var(--a1); top: -20vmax; left: -15vmax; }
+    .aurora span:nth-child(2) { width: 45vmax; height: 45vmax; background: var(--a2); bottom: -20vmax; right: -10vmax; animation-duration: 26s; animation-delay: -6s; }
+    .aurora span:nth-child(3) { width: 35vmax; height: 35vmax; background: var(--a3); top: 30%; left: 40%; opacity: 0.55; animation-duration: 30s; animation-delay: -12s; }
+    .aurora span:nth-child(4) { width: 25vmax; height: 25vmax; background: var(--a4); bottom: 10%; left: 5%; opacity: 0.35; animation-duration: 34s; animation-delay: -3s; }
+
+    @keyframes drift {
+      0%   { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(8vmax, -6vmax) scale(1.15); }
+      100% { transform: translate(-6vmax, 8vmax) scale(0.9); }
+    }
+
+    #stars, #confetti {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    #stars { z-index: 1; }
+    #confetti { z-index: 10; }
+
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.08;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ---------- Layout ---------- */
+    main {
+      position: relative;
+      z-index: 3;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(28px, 5vh, 56px);
+      padding: 48px 16px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      animation: rise 1s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .eyebrow .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--a3);
+      box-shadow: 0 0 12px var(--a3);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes pulse { 50% { transform: scale(1.6); opacity: 0.4; } }
+
+    h1 {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: clamp(40px, 9vw, 104px);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      background: linear-gradient(100deg, #fff 0%, #d9ccff 30%, var(--a2) 60%, var(--a4) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: rise 1s .1s cubic-bezier(.2,.8,.2,1) both, shine 8s linear infinite;
+    }
+    @keyframes shine { to { background-position: 200% center; } }
+
+    .date {
+      margin-top: 14px;
+      font-size: clamp(15px, 2.2vw, 19px);
+      font-weight: 300;
+      color: var(--muted);
+      animation: rise 1s .2s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .date strong { color: var(--text); font-weight: 600; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(24px); filter: blur(8px); }
+      to   { opacity: 1; transform: none; filter: none; }
+    }
+
+    /* ---------- Countdown ---------- */
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(10px, 2vw, 24px);
+      width: 100%;
+      max-width: 880px;
+    }
+
+    .unit {
+      position: relative;
+      padding: clamp(18px, 3.5vw, 36px) 8px clamp(14px, 2.5vw, 26px);
+      border-radius: clamp(18px, 2.5vw, 28px);
+      background: linear-gradient(160deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow:
+        0 20px 60px -20px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.15);
+      overflow: hidden;
+      animation: rise 1s cubic-bezier(.2,.8,.2,1) both;
+      transition: transform .4s cubic-bezier(.2,.8,.2,1), border-color .4s;
+    }
+    .unit:nth-child(1) { animation-delay: .30s; }
+    .unit:nth-child(2) { animation-delay: .38s; }
+    .unit:nth-child(3) { animation-delay: .46s; }
+    .unit:nth-child(4) { animation-delay: .54s; }
+    .unit:hover { transform: translateY(-6px); border-color: rgba(255,255,255,0.3); }
+
+    /* glow line on top of each card */
+    .unit::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 15%; right: 15%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+    .unit::after {
+      content: "";
+      position: absolute;
+      top: -40%; left: 50%;
+      width: 70%; height: 80%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      filter: blur(50px);
+      opacity: 0.22;
+      pointer-events: none;
+    }
+    .unit:nth-child(1) { --accent: var(--a1); }
+    .unit:nth-child(2) { --accent: var(--a2); }
+    .unit:nth-child(3) { --accent: var(--a3); }
+    .unit:nth-child(4) { --accent: var(--a4); }
+
+    .value {
+      position: relative;
+      z-index: 1;
+      display: block;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: clamp(36px, 9vw, 96px);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.04em;
+      text-shadow: 0 0 30px rgba(255,255,255,0.25);
+    }
+    .value.tick { animation: tick .5s cubic-bezier(.2,.8,.2,1); }
+    @keyframes tick {
+      0%   { transform: translateY(-40%); opacity: 0; filter: blur(6px); }
+      100% { transform: none; opacity: 1; filter: none; }
+    }
+
+    .label {
+      position: relative;
+      z-index: 1;
+      display: block;
+      margin-top: clamp(8px, 1.4vw, 14px);
+      font-size: clamp(11px, 1.5vw, 14px);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ---------- Footer ---------- */
+    .meta {
+      font-size: 14px;
+      color: var(--muted);
+      animation: rise 1s .7s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .meta b { color: var(--text); font-weight: 600; }
+
+    /* ---------- Done state ---------- */
+    .done-msg {
+      display: none;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(28px, 6vw, 64px);
+      font-weight: 700;
+      animation: rise 1s cubic-bezier(.2,.8,.2,1) both;
+    }
+    body.is-done .countdown,
+    body.is-done .meta { display: none; }
+    body.is-done .done-msg { display: block; }
+
+    @media (max-width: 520px) {
+      .countdown { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <main>
+    <div class="eyebrow"><span class="dot"></span><span id="status">Đang đếm ngược</span></div>
+
+    <header>
+      <h1 id="title">Sắp cook rồi!</h1>
+      <p class="date" id="date"></p>
+    </header>
+
+    <section class="countdown" aria-live="polite">
+      <div class="unit"><span class="value" id="d">00</span><span class="label">Ngày</span></div>
+      <div class="unit"><span class="value" id="h">00</span><span class="label">Giờ</span></div>
+      <div class="unit"><span class="value" id="m">00</span><span class="label">Phút</span></div>
+      <div class="unit"><span class="value" id="s">00</span><span class="label">Giây</span></div>
+    </section>
+
+    <p class="done-msg">🎉 Đã đến giờ rồi! 🎉</p>
+
+    <p class="meta" id="meta"></p>
+  </main>
+
+  <script>
+    // ====== CẤU HÌNH ======
+    // 15:00 ngày 30/10/2026, giờ Việt Nam (UTC+7)
+    const TARGET = new Date("2026-10-30T15:00:00+07:00");
+    const TITLE = "Sắp tới rồi!";
+    // ======================
+
+    document.getElementById("title").textContent = TITLE;
+
+    const fmtDate = new Intl.DateTimeFormat("vi-VN", {
+      weekday: "long", day: "numeric", month: "long", year: "numeric",
+      timeZone: "Asia/Ho_Chi_Minh"
+    });
+    const dateText = fmtDate.format(TARGET);
+    document.getElementById("date").innerHTML =
+      `<strong>15:00</strong> · ${dateText.charAt(0).toUpperCase() + dateText.slice(1)}`;
+
+    const els = {
+      d: document.getElementById("d"),
+      h: document.getElementById("h"),
+      m: document.getElementById("m"),
+      s: document.getElementById("s"),
+    };
+    const meta = document.getElementById("meta");
+    const pad = n => String(n).padStart(2, "0");
+
+    function setValue(el, v) {
+      if (el.textContent === v) return;
+      el.textContent = v;
+      el.classList.remove("tick");
+      void el.offsetWidth; // restart animation
+      el.classList.add("tick");
+    }
+
+    let finished = false;
+    function update() {
+      const diff = TARGET - Date.now();
+      if (diff <= 0) {
+        if (!finished) {
+          finished = true;
+          document.body.classList.add("is-done");
+          document.getElementById("status").textContent = "Đã đến giờ";
+          document.title = "🎉 Đã đến giờ!";
+          launchConfetti();
+        }
+        return;
+      }
+      const total = Math.floor(diff / 1000);
+      const d = Math.floor(total / 86400);
+      const h = Math.floor((total % 86400) / 3600);
+      const m = Math.floor((total % 3600) / 60);
+      const s = total % 60;
+
+      setValue(els.d, pad(d));
+      setValue(els.h, pad(h));
+      setValue(els.m, pad(m));
+      setValue(els.s, pad(s));
+
+      meta.innerHTML = `Còn <b>${total.toLocaleString("vi-VN")}</b> giây nữa`;
+      document.title = `${d}n ${pad(h)}:${pad(m)}:${pad(s)} · Đếm Ngược`;
+    }
+    // ====== Starfield ======
+    const sc = document.getElementById("stars");
+    const sx = sc.getContext("2d");
+    let stars = [], W = 0, H = 0, DPR = 1;
+
+    function resize() {
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      W = window.innerWidth; H = window.innerHeight;
+      for (const c of [sc, cc]) {
+        c.width = W * DPR; c.height = H * DPR;
+        c.getContext("2d").setTransform(DPR, 0, 0, DPR, 0, 0);
+      }
+      const count = Math.round((W * H) / 6000);
+      stars = Array.from({ length: count }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.3 + 0.2,
+        v: Math.random() * 0.15 + 0.03,
+        p: Math.random() * Math.PI * 2,
+      }));
+    }
+
+    function drawStars(t) {
+      sx.clearRect(0, 0, W, H);
+      for (const st of stars) {
+        st.y -= st.v;
+        if (st.y < -2) { st.y = H + 2; st.x = Math.random() * W; }
+        const a = 0.35 + 0.65 * Math.abs(Math.sin(t / 1400 + st.p));
+        sx.beginPath();
+        sx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
+        sx.fillStyle = `rgba(255,255,255,${a})`;
+        sx.fill();
+      }
+      requestAnimationFrame(drawStars);
+    }
+
+    // ====== Confetti ======
+    const cc = document.getElementById("confetti");
+    const cx = cc.getContext("2d");
+    const colors = ["#7c5cff", "#ff5ca8", "#2de2e6", "#ffb84d", "#ffffff"];
+    let pieces = [];
+
+    function launchConfetti() {
+      const burst = () => {
+        for (let i = 0; i < 160; i++) {
+          pieces.push({
+            x: W / 2, y: H * 0.45,
+            vx: (Math.random() - 0.5) * 18,
+            vy: Math.random() * -16 - 4,
+            w: Math.random() * 8 + 4, h: Math.random() * 12 + 6,
+            rot: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.3,
+            c: colors[(Math.random() * colors.length) | 0],
+            life: 1,
+          });
+        }
+      };
+      burst();
+      setTimeout(burst, 700);
+      setTimeout(burst, 1400);
+      requestAnimationFrame(drawConfetti);
+    }
+
+    function drawConfetti() {
+      cx.clearRect(0, 0, W, H);
+      pieces = pieces.filter(p => p.y < H + 40 && p.life > 0);
+      for (const p of pieces) {
+        p.vy += 0.35; p.vx *= 0.99;
+        p.x += p.vx; p.y += p.vy;
+        p.rot += p.vr; p.life -= 0.003;
+        cx.save();
+        cx.translate(p.x, p.y);
+        cx.rotate(p.rot);
+        cx.globalAlpha = Math.max(p.life, 0);
+        cx.fillStyle = p.c;
+        cx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h * Math.cos(p.rot * 2));
+        cx.restore();
+      }
+      if (pieces.length) requestAnimationFrame(drawConfetti);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    requestAnimationFrame(drawStars);
+    update();
+    setInterval(update, 1000);
+  </script>
+</body>
+</html>
